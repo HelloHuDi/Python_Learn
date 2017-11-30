@@ -1,0 +1,20 @@
+write object 1
+write object 2
+write object 3
+write object 4
+
+write object 1
+write object 2
+write object 3
+write object 4
+
+write object 1
+write object 2
+write object 3
+write object 4
+
+write object 1
+write object 2
+write object 3
+write object 4
+
