@@ -4,3 +4,5 @@ except ZeroDivisionError:
     print("ZeroDivisionError")
 else:
     print("answer:" + str(answer))
+finally:
+    print("finally")

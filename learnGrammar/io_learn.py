@@ -1,5 +1,5 @@
 with open("testFile/read.txt") as file:
-    # print(file.read().strip())
+    # print(len(file.read().strip().split()))
     for line in file:
         print(line.strip().split(","))
 
