@@ -57,7 +57,7 @@ def find_imgs(url):
 # 保存图片
 def save_imgs(img_addrs):
     for each in img_addrs:
-        print('download image:%s' % each)
+        print('download images:%s' % each)
         filename = each.split('/')[-1]
         with open(filename, 'wb') as f:
             img = open_url("http:" + each)
