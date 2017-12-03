@@ -2,7 +2,7 @@
 import pygame
 
 
-class Ship():
+class Ship(object):
     def __init__(self, ai_setting, screen):
         self.screen = screen
         self.ai_setting = ai_setting
