@@ -6,7 +6,7 @@ class Ship(object):
     def __init__(self, ai_setting, screen):
         self.screen = screen
         self.ai_setting = ai_setting
-        self.image = pygame.image.load_basic("images/ship.bmp")
+        self.image = pygame.image.load_basic(ai_setting.ship_image_path)
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         # 将飞船置于底部中间
