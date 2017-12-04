@@ -3,8 +3,8 @@
 class Settings():
     def __init__(self):
         # 设置屏幕
-        self.screen_width = 800
-        self.screen_height = 800
+        self.screen_width = 300
+        self.screen_height = 600
         self.bg_color = (0, 0, 0)
         self.ship_speed_factor = 20
         self.ship_image_path = "images/ship.png"
@@ -20,17 +20,12 @@ class Settings():
         self.bullets_allowed = 5
         # 外星人
         self.alien_image_path = 'images/alien.png'
-        self.alien_speed_factor = self.ship_speed_factor / 2.0
+        self.alien_speed_factor = self.ship_speed_factor / 4.0
         self.fleet_drop_speed = 10
         # 移动方向 ，fleet_direction of 1 represents right, -1 represents left.
         self.fleet_direction = 1
         # 外星人被击中爆炸效果
-        self.alien_explode_image_path = ("images/pop1.png",
-                                         "images/pop2.png",
-                                         "images/pop3.png",
-                                         "images/pop4.png",
-                                         "images/pop5.png",
-                                         )
+        self.alien_explode_image_path = "images/explode.gif"
         # 设置玩家本轮游戏次数（n条命）
         self.ship_limit = 3
 

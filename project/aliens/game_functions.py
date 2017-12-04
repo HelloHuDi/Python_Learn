@@ -5,6 +5,7 @@ import pygame
 import sys
 from project.aliens.bullet import Bullet
 from project.aliens.alien import Alien
+from project.aliens import Music
 
 
 def check_key_up_events(event, ship):
@@ -50,6 +51,8 @@ def check_events(ai_setting, screen, ship, bullets):
             check_key_down_events(event, ai_setting, screen, ship, bullets)
         elif event.type == pygame.KEYUP:
             check_key_up_events(event, ship)
+        elif event.type == pygame.USEREVENT:
+            Music.start_music()
 
 
 def update_screen(ai_setting, screen, ship, aliens, bullets):
@@ -83,8 +86,8 @@ def check_bullet_alien_collisions(ai_setting, screen, ship, aliens, bullets):
     collisions = pygame.sprite.groupcollide(bullets, aliens, not ai_setting.bullet_strike, True)
     # 调用爆炸效果
     for values in collisions.values():
-        for value in values:
-            value.explode()
+        for alien in values:
+            alien.explode()
     if len(aliens) == 0:
         # Destroy existing bullets, and create new fleet.
         bullets.empty()

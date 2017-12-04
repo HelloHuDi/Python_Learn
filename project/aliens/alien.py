@@ -3,13 +3,12 @@ from time import sleep
 import pygame
 from pygame.sprite import Sprite
 
-
 class Alien(Sprite):
     """A class to represent a single alien in the fleet."""
 
     def __init__(self, ai_settings, screen):
         """Initialize the alien, and set its starting position."""
-        super(Alien, self).__init__()
+        super().__init__()
         self.screen = screen
         self.ai_settings = ai_settings
 
@@ -40,13 +39,13 @@ class Alien(Sprite):
                    self.ai_settings.fleet_direction)
         self.rect.x = self.x
 
-    def blitme(self):
+    def blitme(self, image=None):
         """Draw the alien at its current location."""
-        self.screen.blit(self.image, self.rect)
+        if image:
+            self.screen.blit(image, self.rect)
+        else:
+            self.screen.blit(self.image, self.rect)
 
     def explode(self):
-        print("爆炸" + str(self.rect))
-        for path in self.explode_image_path:
-            image = pygame.image.load_extended(path)
-            print("效果：" + str(image))
-            self.screen.blit(image, self.rect)
+        print("explode" + str(self.rect))
+        self.blitme(pygame.image.load_extended(self.explode_image_path))

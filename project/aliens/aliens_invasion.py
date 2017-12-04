@@ -1,6 +1,10 @@
 # -*- coding:utf-8 -*-
+from time import sleep
+
 import pygame
 from pygame.sprite import Group
+
+from project.aliens import Music
 from project.aliens.settings import Settings
 from project.aliens.Ship import Ship
 from project.aliens.game_stats import GameStats
@@ -9,6 +13,7 @@ import project.aliens.game_functions as gf
 
 def run_game():
     pygame.init()
+    Music.start_music()
     ai_setting = Settings()
     screen = pygame.display.set_mode((ai_setting.screen_width, ai_setting.screen_height))
     ship = Ship(ai_setting, screen)
