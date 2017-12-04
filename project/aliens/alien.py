@@ -1,5 +1,8 @@
+from time import sleep
+
 import pygame
 from pygame.sprite import Sprite
+
 
 class Alien(Sprite):
     """A class to represent a single alien in the fleet."""
@@ -11,7 +14,7 @@ class Alien(Sprite):
         self.ai_settings = ai_settings
 
         # Load the alien image, and set its rect attribute.
-        self.image = pygame.image.load_basic(ai_settings.alien_image_path)
+        self.image = pygame.image.load_extended(ai_settings.alien_image_path)
         self.rect = self.image.get_rect()
 
         # Start each new alien near the top left of the screen.
@@ -20,7 +23,9 @@ class Alien(Sprite):
 
         # Store the alien's exact position.
         self.x = float(self.rect.x)
-        
+        # explode image path
+        self.explode_image_path = ai_settings.alien_explode_image_path
+
     def check_edges(self):
         """Return True if alien is at edge of screen."""
         screen_rect = self.screen.get_rect()
@@ -28,13 +33,20 @@ class Alien(Sprite):
             return True
         elif self.rect.left <= 0:
             return True
-        
+
     def update(self):
         """Move the alien right or left."""
         self.x += (self.ai_settings.alien_speed_factor *
-                    self.ai_settings.fleet_direction)
+                   self.ai_settings.fleet_direction)
         self.rect.x = self.x
 
     def blitme(self):
         """Draw the alien at its current location."""
         self.screen.blit(self.image, self.rect)
+
+    def explode(self):
+        print("爆炸" + str(self.rect))
+        for path in self.explode_image_path:
+            image = pygame.image.load_extended(path)
+            print("效果：" + str(image))
+            self.screen.blit(image, self.rect)
