@@ -29,7 +29,7 @@ class Settings():
                                          'images/pop2.png',
                                          'images/pop3.png',
                                          'images/pop4.png',
-                                         'images/pop5.png')#"images/explode.gif"
+                                         'images/pop5.png')
         # 设置玩家本轮游戏次数（n条命）
         self.ship_limit = 3
 

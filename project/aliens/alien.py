@@ -1,5 +1,3 @@
-from time import sleep
-
 import pygame
 from pygame.sprite import Sprite
 import threading
