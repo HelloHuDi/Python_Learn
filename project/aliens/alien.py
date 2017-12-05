@@ -48,6 +48,7 @@ class Alien(Sprite):
         pygame.display.update()
 
     def explode(self, alien):
+        """异步实现"""
         t = threading.Thread(target=self.async_explode, args=(alien,))
         t.start()
         t.join()
