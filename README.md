@@ -1,5 +1,5 @@
 ## learning python
 
-## learnGrammar: learn python grammar
+### learnGrammar: learn python grammar
 
-## project: all sorts of small projects
+### project: all sorts of small projects
