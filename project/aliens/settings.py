@@ -17,7 +17,7 @@ class Settings():
         # self.bullet_color = (60, 60, 60)
         self.bullet_image_path = "images/bullet_general.png"
         # 当前屏幕内允许存在的子弹数量
-        self.bullets_allowed = 5
+        self.bullets_allowed = 10
         # 外星人
         self.alien_image_path = 'images/alien.png'
         self.alien_speed_factor = self.ship_speed_factor / 4.0
@@ -25,7 +25,11 @@ class Settings():
         # 移动方向 ，fleet_direction of 1 represents right, -1 represents left.
         self.fleet_direction = 1
         # 外星人被击中爆炸效果
-        self.alien_explode_image_path = "images/explode.gif"
+        self.alien_explode_image_path = ('images/pop1.png',
+                                         'images/pop2.png',
+                                         'images/pop3.png',
+                                         'images/pop4.png',
+                                         'images/pop5.png')#"images/explode.gif"
         # 设置玩家本轮游戏次数（n条命）
         self.ship_limit = 3
 

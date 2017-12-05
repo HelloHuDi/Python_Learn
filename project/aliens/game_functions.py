@@ -87,7 +87,7 @@ def check_bullet_alien_collisions(ai_setting, screen, ship, aliens, bullets):
     # 调用爆炸效果
     for values in collisions.values():
         for alien in values:
-            alien.explode()
+            alien.explode(alien)
     if len(aliens) == 0:
         # Destroy existing bullets, and create new fleet.
         bullets.empty()
