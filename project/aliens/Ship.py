@@ -1,9 +1,12 @@
 # -*- coding:utf-8 -*-
 import pygame
+from pygame.sprite import Sprite
 
 
-class Ship(object):
+class Ship(Sprite):
+
     def __init__(self, ai_setting, screen):
+        super().__init__()
         self.screen = screen
         self.ai_setting = ai_setting
         self.image = pygame.image.load_extended(ai_setting.ship_image_path)

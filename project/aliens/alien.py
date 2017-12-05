@@ -45,7 +45,6 @@ class Alien(Sprite):
             self.screen.blit(image, self.rect)
         else:
             self.screen.blit(self.image, self.rect)
-        pygame.display.update()
 
     def explode(self, alien):
         """异步实现"""
@@ -58,5 +57,6 @@ class Alien(Sprite):
         if type(paths) is tuple:
             for path in paths:
                 alien.blitme(pygame.image.load_extended(path))
+            pygame.display.update()
         else:
             alien.blitme(pygame.image.load_extended(paths))

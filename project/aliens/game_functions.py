@@ -41,7 +41,8 @@ def fire_bullet(ai_setting, bullets, screen, ship):
         bullets.add(new_bullet)
 
 
-def check_events(ai_setting, screen, ship, bullets):
+def check_events(ai_setting, screen, stats, play_button, sb,
+                 ship, aliens, bullets):
     # 监听鼠标 键盘事件
     for event in pygame.event.get():
         # 点击退出则关闭界面
@@ -53,26 +54,64 @@ def check_events(ai_setting, screen, ship, bullets):
             check_key_up_events(event, ship)
         elif event.type == pygame.USEREVENT:
             Music.start_music()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            check_play_button(ai_setting, screen, stats, play_button, sb,
+                              ship, aliens, bullets, mouse_x, mouse_y)
 
 
-def update_screen(ai_setting, screen, ship, aliens, bullets):
+def check_play_button(ai_settings, screen, stats, play_button, sb, ship,
+                      aliens, bullets, mouse_x, mouse_y):
+    """Start a new game when the player clicks Play."""
+    button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
+    if button_clicked and not stats.game_active:
+        # Reset the game settings.
+        ai_settings.initialize_dynamic_settings()
+
+        # Hide the mouse cursor.
+        pygame.mouse.set_visible(False)
+
+        # Reset the game statistics.
+        stats.reset_stats()
+        stats.game_active = True
+
+        # Reset the scoreboard images.
+        sb.prep_score()
+        sb.prep_high_score()
+        sb.prep_level()
+        sb.prep_ships()
+
+        # Empty the list of aliens and bullets.
+        aliens.empty()
+        bullets.empty()
+
+        # Create a new fleet and center the ship.
+        creat_fleet(ai_settings, screen, ship, aliens)
+        ship.center_ship()
+
+
+def update_screen(ai_setting, stats, screen, sb, ship, aliens, bullets, play_button):
     # 设置背景色
     screen.fill(ai_setting.bg_color)
-    for bullet in bullets.sprites():
-        bullet.draw_bullet()
-    ship.blitme()
-    aliens.draw(screen)
+    if not stats.game_active:
+        play_button.draw_button()
+    else:
+        for bullet in bullets.sprites():
+            bullet.draw_bullet()
+        ship.blitme()
+        sb.show_score()
+        aliens.draw(screen)
     # 显示界面
     pygame.display.flip()
 
 
-def update_bullets(ai_setting, screen, ship, aliens, bullets):
+def update_bullets(ai_setting, screen, stats, sb, ship, aliens, bullets):
     bullets.update()
     # 超出屏幕顶部 则移除
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
-    check_bullet_alien_collisions(ai_setting, screen, ship, aliens, bullets)
+    check_bullet_alien_collisions(ai_setting, screen, stats, sb, ship, aliens, bullets)
 
 
 '''
@@ -80,18 +119,33 @@ def update_bullets(ai_setting, screen, ship, aliens, bullets):
 '''
 
 
-def check_bullet_alien_collisions(ai_setting, screen, ship, aliens, bullets):
+def check_bullet_alien_collisions(ai_setting, screen, stats, sb, ship, aliens, bullets):
     """Respond to bullet-alien collisions."""
     # Remove any bullets and aliens that have collided.
     collisions = pygame.sprite.groupcollide(bullets, aliens, not ai_setting.bullet_strike, True)
     # 调用爆炸效果
     for values in collisions.values():
         for alien in values:
+            stats.score += ai_setting.alien_points
+            sb.prep_score()
             alien.explode(alien)
+    check_high_score(stats, sb)
     if len(aliens) == 0:
         # Destroy existing bullets, and create new fleet.
         bullets.empty()
+        # Increase level.
+        stats.level += 1
+        sb.prep_level()
+
+        ai_setting.increase_speed()
         creat_fleet(ai_setting, screen, ship, aliens)
+
+
+def check_high_score(stats, sb):
+    """Check to see if there's a new high score."""
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        sb.prep_high_score()
 
 
 def creat_fleet(ai_setting, screen, ship, aliens):
@@ -152,7 +206,7 @@ def change_fleet_direction(ai_setting, aliens):
     ai_setting.fleet_direction *= -1
 
 
-def update_aliens(ai_setting, stats, screen, ship, aliens, bullets):
+def update_aliens(ai_setting, stats, screen, sb, ship, aliens, bullets):
     """
     Check if the fleet is at an edge,
       then update the postions of all aliens in the fleet.
@@ -162,19 +216,22 @@ def update_aliens(ai_setting, stats, screen, ship, aliens, bullets):
 
     # Look for alien-ship collisions.
     if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(ai_setting, stats, screen, ship, aliens, bullets)
+        ship_hit(ai_setting, stats, screen, sb, ship, aliens, bullets)
     # Look for aliens hitting the bottom of the screen.
-    check_aliens_bottom(ai_setting, stats, screen, ship, aliens, bullets)
+    check_aliens_bottom(ai_setting, stats, screen, sb, ship, aliens, bullets)
 
 
-def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+def ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets):
     """Respond to ship being hit by alien."""
     print("game over!")
     if stats.ships_left > 0:
         # Decrement ships_left.
         stats.ships_left -= 1
+        # Update scoreboard.
+        sb.prep_ships()
     else:
         stats.game_active = False
+        pygame.mouse.set_visible(True)
 
     # Empty the list of aliens and bullets.
     aliens.empty()
@@ -190,11 +247,11 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
 '''检查外星人是否已经到达屏幕底部'''
 
 
-def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
+def check_aliens_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets):
     """Check if any aliens have reached the bottom of the screen."""
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
             # Treat this the same as if the ship got hit.
-            ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+            ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets)
             break
