@@ -7,8 +7,6 @@ class Bullet(Sprite):
     def __init__(self, ai_setting, screen, ship):
         super().__init__()
         self.screen = screen
-        # self.rect = pygame.Rect(0, 0, ai_setting.bullet_width, ai_setting.bullet_height)
-        # self.color = ai_setting.bullet_color
         self.image = pygame.image.load_extended(ai_setting.bullet_image_path)
         self.rect = self.image.get_rect()
         self.rect.centerx = ship.rect.centerx
@@ -21,5 +19,4 @@ class Bullet(Sprite):
         self.rect.y = self.y
 
     def draw_bullet(self):
-        # pygame.draw.rect(self.screen, self.color, self.rect)
         self.screen.blit(self.image, self.rect)

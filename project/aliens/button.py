@@ -1,9 +1,12 @@
+# -*- coding:utf-8 -*-
 import pygame.font
 
 
 class Button():
-    def __init__(self, ai_setting, screen, msg):
+    def __init__(self, ai_setting, screen, msg="PLAY"):
         """Initialize button attributes."""
+        # 设置是否重新开始
+        self.restart = True
         self.screen = screen
         self.screen_rect = screen.get_rect()
         # Set the dimensions and properties of the button.
@@ -14,8 +17,11 @@ class Button():
         # Build the button's rect object, and center it.
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.center = self.screen_rect.center
-
         # The button message only needs to be prepped once.
+        self.prep_msg(msg)
+
+    def continue_game(self, msg="CONTINUE"):
+        self.restart = False
         self.prep_msg(msg)
 
     def prep_msg(self, msg):

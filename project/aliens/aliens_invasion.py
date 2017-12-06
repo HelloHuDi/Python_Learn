@@ -23,15 +23,17 @@ def run_game():
     bullets = Group()
     aliens = Group()
     pygame.display.set_caption("Alien Invasion")
-    play_button = Button(ai_setting, screen, "PLAY")
+    play_button = Button(ai_setting, screen)
     while True:
         gf.check_events(ai_setting, screen, stats, play_button, sb,
                         ship, aliens, bullets)
         if stats.game_active:
             ship.update()
             gf.update_bullets(ai_setting, screen, stats, sb, ship, aliens, bullets)
-            gf.update_aliens(ai_setting, stats, screen,sb, ship, aliens, bullets)
+            gf.update_aliens(ai_setting, stats, screen, sb, ship, aliens, bullets, play_button)
         gf.update_screen(ai_setting, stats, screen, sb, ship, aliens, bullets, play_button)
 
-
 run_game()
+
+# if __name__ == '__main__':
+#     run_game()

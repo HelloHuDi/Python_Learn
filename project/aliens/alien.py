@@ -1,7 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
-import threading
-
+import project.aliens.explode as ed
 
 class Alien(Sprite):
     """A class to represent a single alien in the fleet."""
@@ -46,17 +45,5 @@ class Alien(Sprite):
         else:
             self.screen.blit(self.image, self.rect)
 
-    def explode(self, alien):
-        """异步实现"""
-        t = threading.Thread(target=self.async_explode, args=(alien,))
-        t.start()
-        t.join()
-
-    def async_explode(self, alien):
-        paths = alien.explode_image_path
-        if type(paths) is tuple:
-            for path in paths:
-                alien.blitme(pygame.image.load_extended(path))
-            pygame.display.update()
-        else:
-            alien.blitme(pygame.image.load_extended(paths))
+    def explode(self):
+        ed.explode(self)
