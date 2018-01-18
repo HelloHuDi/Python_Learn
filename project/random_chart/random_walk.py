@@ -2,7 +2,6 @@
 # Created by hd on 2017/12/5 .
 from random import choice
 
-
 class RandomWalk():
     """ 生成随机漫步数据"""
 
