@@ -50,7 +50,7 @@ def createJavaBean(filePath, createPath):
 
 # createJavaBean("file/health.txt", "file/bean.txt")
 
-mainPath = "/Users/hd/Downloads/health"
+mainPath = "/Users/hd/Downloads/新建文件夹 (2)"
 listFile = os.listdir(mainPath)
 for fileName in listFile:
     try:
