@@ -3,4 +3,4 @@
 import whois
 """查询网站所有者"""
 
-print(whois.whois("www.siheal.com"))
+print(whois.whois("https://www.zhipin.com"))

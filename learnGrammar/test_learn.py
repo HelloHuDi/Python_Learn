@@ -1,4 +1,4 @@
-# 测试工程
+"""测试工程"""
 import unittest
 from learnGrammar.str_learn import get_formatted_name
 

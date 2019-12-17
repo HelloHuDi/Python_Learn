@@ -10,3 +10,18 @@ print(*zipped2)
 zipped3, zipped4 = zip(*zip(a, b))
 print(*zipped3)
 print(*zipped4)
+
+
+# 压缩
+import zlib
+
+# b" "前缀表示：后面字符串是bytes 类型。
+s = b'witch which has which witches wrist watch'
+
+print(len(s))
+
+w = zlib.compress(s)
+
+print(len(w), w)
+
+print(zlib.decompress(w))
